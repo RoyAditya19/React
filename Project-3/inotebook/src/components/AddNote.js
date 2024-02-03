@@ -10,15 +10,13 @@ export default function AddNote(props) {
     const handleClick = (e)=>
     {
         e.preventDefault();
-        addNote(note.title, note.description, note.tag);
-        setNote({title: "",description: "",tag: ""})
+        addNote(note.title, note.description, note.tag);    //when this was called, note was updated using setnote(written below in the onchange function)
+        setNote({title: "",description: "",tag: ""})        //this was used so that when the notes has been added then the input section should become empty. and along with this line i also added (value={note.title}..etc) in the input sections.
         props.showAlert("Added Successfully", "success")
-
     }
-
     const onChange = (e)=>
     {
-        setNote({...note, [e.target.name]: e.target.value})
+        setNote({...note, [e.target.name]: e.target.value})   //this was used to update the input section(from blank to typed)
     }
   return (
     <>
@@ -37,7 +35,7 @@ export default function AddNote(props) {
     <label htmlFor="tag" className="form-label">Tag</label>
     <input type="text" className="form-control" id="tag" name='tag' value={note.tag} onChange={onChange} minLength={5} required/>
   </div>
-  <button disabled={note.title.length<5 || note.description.length<5} type="submit" className="btn btn-primary" onClick={handleClick}>Submit</button>
+  <button disabled={note.title.length<5 || note.description.length<5} type="submit" className="btn btn-primary" onClick={handleClick}>Add Note</button>
 </form>
 </div> 
     </>

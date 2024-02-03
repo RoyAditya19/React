@@ -5,10 +5,10 @@ import AddNote from "./AddNote";
 import { useNavigate } from "react-router-dom";
 
 const Notes = (props) => {
-  const context = useContext(NoteContext);
+  const context = useContext(NoteContext);      
+  const { notes, getNotes,editNote } = context; //we have taken all the states/functions(defined in the notestate.js file) in the context using usecontext function
   let navigate = useNavigate();
-  const { notes, getNotes,editNote } = context;
-  useEffect(() => {
+  useEffect(() => {       //it basically allows you to perform side effects in the components, like here it is fetching the data. 
     if(localStorage.getItem('token'))
     {
       getNotes()
@@ -19,23 +19,24 @@ const Notes = (props) => {
     // eslint-disable-next-line
   }, [])
 
-  const ref = useRef(null)
-  const refClose = useRef(null)
+  const ref = useRef(null)      //this hook actually opens a modal when clicked on edit button present in the noteitem. the modal should have been opened by clicking on any other button(present on the modal section) but on that button ref={ref} is used(see below) and when the edit button is clicked, it shoots the updatenote function which consist of a command(ref.current.click) that opens the modal without clicking on that button which should actually open the model.
+  const refClose = useRef(null) //this hook closes the modal when clicked on save changes button present in the modal. here also same strategy is used as above to close the modal. when clicked on savechanges button present in the modal it actually also performs the functionality provided by close button(present in modal) without clicking on it.
   const [note, setNote] = useState({id:"",etitle: "",edescription: "",etag: ""})
 
   const updateNote=(currentNote)=>{
     ref.current.click();
-    setNote({id:currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag})
+    setNote({id:currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag})    //this sets the tags(title,description etc) in the modal(which opens on clicking edit) to the value which is stored in the notes and that notes is referred as currentnote here 
   }
 
-
-  const handleClick = (e)=>
+  //when the savechanges button is clicked the modal gets closed as the refclose.current.click function is already used, also the notes gets edited as the editnote function from notestate is extracted here using context.
+  const handleClick = (e)=> 
     {
       refClose.current.click();
       editNote(note.id, note.etitle, note.edescription, note.etag);
       props.showAlert("Updated Successfully", "success");
     }
 
+    //while writing the values in the modal what it does is it keeps the previous values and then after that it adds the new value added to it. "...note" represents that keep the previous note as it is.
     const onChange = (e)=>
     {
         setNote({...note, [e.target.name]: e.target.value})
@@ -55,7 +56,7 @@ const Notes = (props) => {
       <div className="modal-body">
       <form className='my-3'>
   <div className="mb-3">
-    <label htmlFor="title" className="form-label">Title</label>
+    <label htmlFor="title" className="form-label">Title</label>   {/* the value=note.title below stores the value same as the value in notes which is displayed in the frontend*/}
     <input type="text" className="form-control" id="etitle" name='etitle' aria-describedby="emailHelp" value={note.etitle} onChange={onChange} minLength={5} required/>
   </div>
   <div className="mb-3">
@@ -77,6 +78,9 @@ const Notes = (props) => {
 </div>
     <div className="row my-3">
       <h2>Review Your Notes</h2>
+      <div className="container">
+        {notes.length === 0 && 'No notes to display'}
+      </div>
       {notes.map((notes) => {
         return <Noteitem notes={notes} key={notes._id} updateNote={updateNote} showAlert={props.showAlert}/>;
       })}

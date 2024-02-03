@@ -21,7 +21,7 @@ router.post(
     //if there are error return bad request
     {
       let success = false;
-      const errors = validationResult(req);
+      const errors = validationResult(req);   //this error gets a value whenever the user has entered the wrong data, here for example writing a name of length less than 5
       if (!errors.isEmpty()) {
         return res.status(400).json({success, errors: errors.array() });
       }
@@ -30,7 +30,7 @@ router.post(
         let user = await User.findOne({ email: req.body.email });
         //   console.log(user);
         if (user) {
-          return res.status(400).json({ error: "Invalid Email ID" });
+          return res.status(400).json({ error: "Invalid Email ID" });           //means that the email entered already exists
         }
 
         // else{
@@ -52,7 +52,7 @@ router.post(
         const authtoken = jwt.sign(data, JWT_SECRET);
         //return token to the user
         success=true;
-        res.json({success, authtoken });
+        res.json({success, authtoken }); //using this we are sending token and a success message to the user whenever a new user gets registered
 
         // //  res.json({ message: "data saved" });
       } catch (error) {
@@ -117,3 +117,4 @@ router.post("/getuser", fetchuser, async (req, res) => {
   }
 });
 module.exports = router;
+

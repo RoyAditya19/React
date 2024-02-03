@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const mongoURI = "mongodb://0.0.0.0:27017/inotebook"; // Assuming inotebook is your database name
+const mongoURI = "mongodb://0.0.0.0:27017/inotebook"; // Assuming inotebook is your database name, sometimes localhost instead of 0.0.0.0 doesn't works accordingly
 
 const connectToMongo = () => {
     mongoose.connect(mongoURI, {

@@ -69,7 +69,8 @@ const NoteState = (props)=>{
 
     //Get all note
 
-    const getNotes = async()=>    //Get all notes
+    const getNotes = async()=>    //all the functions here like getnotes, addnote, deletenote will be now exported by mentioning them in the value of NoteContext.Provider
+                                  //now as this function was exported it was imported by Notes.js using the useContext. after importing using useEffect it was used to extract all the notes and display to the user based on the user
     {
                 //API CALL
                  const response = await fetch(`${host}/api/notes/fetchallnotes`, {
@@ -95,7 +96,7 @@ const NoteState = (props)=>{
                         'Content-Type': 'application/json',
                        "auth-token" :localStorage.getItem('token')
                     },
-                    body: JSON.stringify({title,description,tag})
+                    body: JSON.stringify({title,description,tag})           //here all the three things have been passed bcoz while making an api call we were/have (to) passing/pass title description tag so that the notes can be added successfully. same goes with edit note.
                 });
         const note = await response.json();
         setNotes(notes.concat(note))
@@ -139,7 +140,7 @@ const NoteState = (props)=>{
         const json = response.json();
         console.log(json)
 
-        let newNotes= JSON.parse(JSON.stringify(notes))
+        let newNotes= JSON.parse(JSON.stringify(notes))         //this makes the deep copies of the data and now this newNotes now reflect the changes(changing the old notes to new notes) in backend as well as front-end
         //Logic for editing
     for(let index=0; index<newNotes.length; index++) {
             const element = newNotes[index];
