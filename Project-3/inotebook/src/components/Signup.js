@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import { useNavigate } from "react-router-dom";
 
-
+//the logic behind this signup is similar as that of login. refer to login.js for better understanding
 const Signup = (props) => {
   const [credentials, setCredentials] = useState({ name: "", email: "", password: "", cpassword:"" });
   const navigate = useNavigate();

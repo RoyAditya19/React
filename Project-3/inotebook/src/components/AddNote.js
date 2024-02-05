@@ -4,7 +4,7 @@ import NoteContext from "../context/notes/NoteContext";
 
 export default function AddNote(props) {
     const context = useContext(NoteContext);
-    const { addNote } = context;
+    const { addNote } = context;              //addnote function imported from notestate
 
     const [note, setNote] = useState({title: "",description: "",tag: ""})
     const handleClick = (e)=>

@@ -1,6 +1,8 @@
  import React, { useState } from "react";
  import { useNavigate } from "react-router-dom";
 
+ //at the initial stage email and password are empty(as displayed in the credentials(of usestate). now when the user is typing something then with the help of onchange function the credentials are getting updated(using setcredentials method))
+ //and then these values were simpy taken from the updated credentials(of usestate below)
  const Login = (props) => {
    const [credentials, setCredentials] = useState({ email: "", password: "" });
    const navigate = useNavigate();

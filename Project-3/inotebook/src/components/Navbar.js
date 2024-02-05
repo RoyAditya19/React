@@ -3,7 +3,7 @@ import {Link, useLocation, useNavigate} from 'react-router-dom'
 
 const Navbar = () => {
   let navigate = useNavigate();
-  const handleLogout = ()=>
+  const handleLogout = ()=>     //what basically this function does is it just removes the token present in local storage and redirects(via navigate function) the user to login page
   {
     localStorage.removeItem('token');
     navigate('/login')
@@ -30,7 +30,7 @@ const Navbar = () => {
           <Link className={`nav-link ${location.pathname=== "/about"?"active":""}`} to="/about">About</Link>
         </li>
       </ul>
-      {!localStorage.getItem('token')?<form className='d-flex'>
+      {!localStorage.getItem('token')?<form className='d-flex'>     {/*once the user has logged in and the user is in the home page, then the only button which should appear is logout and not login/signup. so for the visibility of logout button this logic was implemented that if the token is not empty(that means the user is logged in) then show the logout button and on clicking the logout button handlelogout function was called.*/ }
       <Link className='btn btn-primary mx-2' role='button' to='/login'>Login</Link>
       <Link className='btn btn-primary mx-2' role='button' to='/signup'>Signup</Link>
       </form>: <button onClick={handleLogout} className='btn btn-primary'>Logout</button> }
