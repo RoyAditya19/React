@@ -12,12 +12,12 @@ import React,{useState} from 'react';
  } from "react-router-dom";
 
 
-// in the following jsx code make sure that if a tag is opened you close it, if you do not close it then it will throw an error. we have changed the class to className and also we have changed href=# to href=/
+// in the following jsx code make sure that if a tag(for example some time anchor or input tag remains opened) is opened you close it, if you do not close it then it will throw an error. we have changed the class to className and also we have changed href=# to href=/
 
-//below here Navbar is a component and to that component we have passed props such as title and we can include more props
+//below here Navbar is a component and to that component we have passed props such as title
 function App() {
-  const [mode, setMode] = useState('light');
-  const [alert, setAlert] = useState(null);
+  const [mode, setMode] = useState('light');    //usestate function returns an array with two elements, one contain the current value of the state and the other contains a function to update that value
+  const [alert, setAlert] = useState(null);     
 
   const showAlert = (message, type) =>
   {

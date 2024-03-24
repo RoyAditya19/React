@@ -18,7 +18,6 @@ export default function Textform(props) {
                             
                         }
 
-
                         const changetolow = ()=>
                         {
                             // console.log("it was changed")
