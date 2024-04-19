@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
 
-const NotesSchema = mongoose.Schema(
-       
+const NotesSchema = mongoose.Schema(    
     {
         user:{
             type: mongoose.Schema.Types.ObjectId,

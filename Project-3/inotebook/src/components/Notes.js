@@ -58,7 +58,11 @@ const Notes = (props) => {
       <div className="modal-body">
       <form className='my-3'>
   <div className="mb-3">
-    <label htmlFor="title" className="form-label">Title</label>   {/* the value=note.title below stores the value same as the value in notes which is displayed in the frontend*/}
+    <label htmlFor="title" className="form-label">Title</label>   {/* the "value=note.etitle" was used to fetch the title,description,tag from the note value of usestate.
+    when the edit button was clicked, updatenote was called with the notes as an argument and then using the setnote(of usestate) the id,title,desc etc was updated in the note value of the usestate
+    and then these values of id/desc/tag etc was taken by the "value=note.etitle/edesciption" and then the onchange function handles the rest.
+    now when we write anything(do any update) in the title/desc/tag section the onchange function takes care of that and updates the note(of usestate) using setnote
+    now when the save button is clicked editnote function takes the title/desc/tag etc as a argument from the note(of usestate) and it updates the note*/}
     <input type="text" className="form-control" id="etitle" name='etitle' aria-describedby="emailHelp" value={note.etitle} onChange={onChange} minLength={5} required/>
   </div>
   <div className="mb-3">
