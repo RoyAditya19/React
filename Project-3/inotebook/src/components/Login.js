@@ -18,7 +18,7 @@
          email: credentials.email,
          password: credentials.password,
        }),
-     });
+     }); 
      const json = await response.json();
      console.log(json);
      if (json.success) {
@@ -57,3 +57,17 @@
  };
 
  export default Login;
+
+
+
+
+
+//at first this login section appears. now when the user enters the details in the form, the data(as a part of the body of the link) goes through an api call using fetch api.
+//now the control goes to the auth.js file of the backend, which first takes out the email and password from the request using javascript destructuring method 
+//and then checks that whether this mail(which have been received through request) is present in the database or not using mongodb command and also at the same time it fetches the details 
+//of the user(if it exist) and stores in the "user" variable. if it's(mail) present it moves forward and checks whether the password given is correct or not. 
+//for password checking it uses the bcrypt method. bcrypt method takes two argument: 1st- the password received through the request, 2nd- the password fetched using the user variable in which the data was stored
+//now when the email and password are verified it fetches the id of the user from the "user" variable and sends it as a data to "jwt.sign" method to generate an auth-token.
+//once the auth-token is generated it is sent as a response back.
+//now this response is converted to a json structure and if json is a success(it means that everything has been cross-verified and the details(like auth-token) are present in the response which was sent back from the backend side),
+//then the auth-token is saved to the local-storage and the user is directed to the home page and then this auth-token would be used for many purposes further 
