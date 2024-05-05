@@ -12,7 +12,7 @@ const Header = () => {
 
 
             <div className="hidden lg:flex items-center w-full justify-center max-w-sm border rounded-full pl-2 focus-within:shadow-md">
-                <input type="text" placeholder='search products here' className='outline-none w-full '/>
+                <input type="text" placeholder='search products here' className='outline-none w-full '/>a
                 <div>
                 <IoSearch className='text-lg bg-red-600 h-7 min-w-16 flex items-center justify-center rounded-r-full'/>
                 </div>
