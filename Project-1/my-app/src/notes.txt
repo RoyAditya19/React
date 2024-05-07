@@ -1,6 +1,0 @@
-in js when a normal function is declared the "this" of that function is undefined, whereas if u declare an  arrow function then the "this" is a window object and not undefined.
-props are generally passed from parent component to child component. function in the child component uses "props" as an argument to access those props 
-we use curly braces to enable javascript features in the html(mainly when we deal with css part), and we use backticks(``) so that whatever we write within that becomes a template literal/string. then we use a $ sign for using the variables.
-when we use two curly braces like( {{}} ) then the first braces says that we need to write a javascript, but the second (insider) one says that now we are gonna use objects(like changing the color, background color) within that
-we try to add meta description tag in our file(when we make projects through react we add this tag in index.html), so that the rank of our website gets increased by the google(usually these things we do for SEO)
-
