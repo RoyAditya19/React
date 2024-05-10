@@ -2,8 +2,10 @@ import React,{ useState } from "react";
 import loginicon from "../assest/signin.gif";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import imageTobase64 from "../helper/imageTobase64";
+import SummaryApi from "../common";
+import {toast} from 'react-toastify'
 
 const SignUp = () => {
     const [showPassowrd, setShowPassowrd] = useState(true);
@@ -16,6 +18,7 @@ const SignUp = () => {
     confirmpassword:"",
     profilepic: ""
   });
+  const navigate = useNavigate();
 
     const handleOnChange = (e) => {
         const { name, value } = e.target;
@@ -38,7 +41,7 @@ const SignUp = () => {
           };
         });
 
-        if (data.password === data.confirmpassword) {
+        if (data.password === e.target.value) {
             setCheckpassword("");
         }
         else
@@ -62,9 +65,33 @@ const SignUp = () => {
             })
         }
     
-      const handleSubmit = (e)=>
+      const handleSubmit = async(e)=>
         {
           e.preventDefault()
+          const dataResponse = await fetch(SummaryApi.signUP.url,
+            {
+              method: SummaryApi.signUP.method,
+              headers: {
+                "content-type": "application/json"
+              },
+              body: JSON.stringify(data)
+            }
+          )
+          
+          const dataapi = await dataResponse.json()
+
+          if(dataapi.success)
+            {
+              toast.success(dataapi.message)
+              navigate("/login")
+            }
+
+          if(dataapi.error)
+            {
+              toast.error(dataapi.message)
+            }
+
+
         }
   return (
     <>
@@ -158,7 +185,7 @@ const SignUp = () => {
                     <span>{showConfirmPassowrd ? <FaEyeSlash /> : <FaEye />}</span>
                   </div>
                 </div>
-                {checkpassword && <p>{checkpassword}</p>}
+                {checkpassword && <p style={{color:"red"}}>{checkpassword}</p>}
               </div>
 
               <button className="bg-red-600 text-white px-6 py-2 w-full max-w-[150px] rounded-full hover:scale-110 transition-all mx-auto block mt-6">
