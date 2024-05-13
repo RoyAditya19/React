@@ -1,20 +1,20 @@
-import React,{ useState } from "react";
+import React,{ useContext, useState } from "react";
 import loginicon from "../assest/signin.gif";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import SummaryApi from "../common";
 import {toast} from 'react-toastify'
-
+import Context from "../context"
 
 const Login = () => {
   const [showPassowrd, setShowPassowrd] = useState(true);
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-  });
+  const [data, setData] = useState({ email: "", password: ""});
 
   const navigate = useNavigate()
+  const {fetchUserDetails} = useContext(Context)
+
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
 
@@ -43,6 +43,7 @@ const Login = () => {
       if(dataapi.success)
         {
           toast.success(dataapi.message)
+          fetchUserDetails()
           navigate("/")
         }
       if(dataapi.error)

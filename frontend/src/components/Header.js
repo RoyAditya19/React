@@ -4,10 +4,35 @@ import { IoSearch } from "react-icons/io5";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import SummaryApi from '../common';
+import { toast } from 'react-toastify';
+import { setUserDetails } from '../store/userSlice';
 
 const Header = () => {
     
-    
+    const user = useSelector(state=> state?.user?.user)
+    const dispatch = useDispatch()
+
+    const handleLogout = async()=>{
+        const fetchData = await fetch(SummaryApi.logout_user.url,{
+            method: SummaryApi.logout_user.method,
+            credentials: 'include'
+        })
+
+        const data = await fetchData.json()
+
+        if(data.success)
+            {
+                toast.success(data.message)
+                dispatch(setUserDetails(null))
+            }
+
+        if(data.error)
+            {
+                toast.error(data.message)
+            }
+    }
   return (
     <header className='h-16 shadow-md bg-white'>
         <div className='h-full container mx-auto flex items-center px-4 justify-between'>
@@ -27,7 +52,9 @@ const Header = () => {
 
             <div className='flex items-center gap-4'>
                 <div className="text-3xl cursor-pointer">
-                <FaRegCircleUser />
+                {
+                    user?.profilePic ? (<img src={user?.profilePic} className='w-8 h-8 rounded-full' alt={user?.name} />) : (<FaRegCircleUser/>)
+                }
                 </div>
 
                 <div className="text-2xl relative">
@@ -37,10 +64,14 @@ const Header = () => {
                     </div>
                 </div>
 
-                <div className=''>
-            <Link to="/login">
-                <button className='px-2 text-white bg-red-600 rounded-full hover:bg-red-700 h-8 w-24'>Login</button>
-            </Link>
+                <div>
+                {
+                    user?._id ? (
+                        <button onClick={handleLogout} className='px-2 text-white bg-red-600 rounded-full hover:bg-red-700 h-8 w-24'>Logout</button>
+                    ) : (
+                        <Link to="/login"> <button className='px-2 text-white bg-red-600 rounded-full hover:bg-red-700 h-8 w-24'>Login</button></Link>
+                    )
+                }
                 </div>
             </div>
 

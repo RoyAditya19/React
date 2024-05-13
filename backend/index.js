@@ -1,8 +1,8 @@
-const express = require("express")
-const cors = require("cors")
-const cookieParser = require("cookie-parser")
-const router = require('./routes')
-const connectToMongo = require("./config/db")
+const express = require("express");
+const cors = require('cors');
+const cookieParser = require("cookie-parser");
+const router = require('./routes');
+const connectToMongo = require("./config/db");
 require('dotenv').config()
 
 const app = express()
@@ -12,6 +12,7 @@ app.use(cors({
     credentials: true
 }
 ))
+// app.use(cors())
 app.use(express.json())
 app.use("/api", router)
 app.use(cookieParser())
