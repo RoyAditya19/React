@@ -1,16 +1,15 @@
 const userModel = require("../models/userModel")
 
-const userDetailsController = async(req,res)=>
+async function userDetailsController(req,res)
     {
             try {
-
                 const user = await userModel.findById(req.userId)
 
                 res.status(200).json({
                     data: user,
                     success: true,
                     error: false,
-                    message: "user-details"
+                    message: "user  details"
                 })
                 
             } catch (error) {

@@ -16,8 +16,8 @@ function App() {
   const fetchUserDetails = async()=>
     {
       const dataResponse = await fetch(SummaryApi.current_user.url,{
-          credentials: 'include'
-
+        method: SummaryApi.current_user.method,
+        credentials: 'include'
         })
 
         const dataApi = await dataResponse.json()
@@ -44,7 +44,6 @@ function App() {
     <Outlet/>
     </main>
     <Footer/>
-
     </Context.Provider>
     </>
   );

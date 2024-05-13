@@ -14,6 +14,7 @@ const Header = () => {
     const user = useSelector(state=> state?.user?.user)
     const dispatch = useDispatch()
 
+    
     const handleLogout = async()=>{
         const fetchData = await fetch(SummaryApi.logout_user.url,{
             method: SummaryApi.logout_user.method,
@@ -53,7 +54,7 @@ const Header = () => {
             <div className='flex items-center gap-4'>
                 <div className="text-3xl cursor-pointer">
                 {
-                    user?.profilePic ? (<img src={user?.profilePic} className='w-8 h-8 rounded-full' alt={user?.name} />) : (<FaRegCircleUser/>)
+                    user?.profilePic ? (<img src={user?.profilePic} className='w-10 h-10 rounded-full' alt={user?.name} />) : (<FaRegCircleUser/>)
                 }
                 </div>
 
