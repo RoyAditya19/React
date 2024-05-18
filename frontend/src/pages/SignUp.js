@@ -16,7 +16,7 @@ const SignUp = () => {
     email: "",
     password: "",
     confirmpassword:"",
-    profilepic: ""
+    profilePic: ""
   });
   const navigate = useNavigate();
 
@@ -60,7 +60,7 @@ const SignUp = () => {
             {
                 return{
                     ...preve,
-                    profilepic: imagePic
+                    profilePic: imagePic
                 }
             })
         }
@@ -100,7 +100,7 @@ const SignUp = () => {
           <div className="bg-white p-5 w-full max-w-sm mx-auto ">
             <div className="w-20 h-20 mx-auto relative rounded-full overflow-hidden">
                 <div>
-                <img src={data.profilepic || loginicon} alt="Login Icon" className="rounded-full" />
+                <img src={data.profilePic || loginicon} alt="Login Icon" className="rounded-full" />
                 </div>
 
                 <form>
@@ -108,7 +108,7 @@ const SignUp = () => {
                 <div className="text-xs cursor-pointer bg-opacity-85 pb-4 pt-2 bg-slate-200  text-center absolute bottom-0 w-full">
                     Upload Photo
                 </div>
-                <input type="file" name="" className="hidden" onChange={handleUploadPic}/>
+                <input type="file" name="profilePic" className="hidden" onChange={handleUploadPic}/>
                 </label>
                 </form>
             </div>

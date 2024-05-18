@@ -11,7 +11,7 @@ import { setUserDetails } from '../store/userSlice';
 
 const Header = () => {
     
-    const user = useSelector(state=> state?.user?.user)
+    const user = useSelector(state=> state?.user?.user)                 //here all the details were fetched with the help of "state" defined in the userslice.js
     const dispatch = useDispatch()
 
     
@@ -26,7 +26,7 @@ const Header = () => {
         if(data.success)
             {
                 toast.success(data.message)
-                dispatch(setUserDetails(null))
+                dispatch(setUserDetails(null))                      //this is setting the userdetails to none, as when logout button was clicked cookies was getting cleared but after the page reload
             }
 
         if(data.error)
