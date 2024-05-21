@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Logo from './Logo'
 import { IoSearch } from "react-icons/io5";
 import { FaRegCircleUser } from "react-icons/fa6";
@@ -13,6 +13,7 @@ const Header = () => {
     
     const user = useSelector(state=> state?.user?.user)                 //here all the details were fetched with the help of "state" defined in the userslice.js
     const dispatch = useDispatch()
+    const [menudisplay, setmenudisplay] = useState(false)
 
     
     const handleLogout = async()=>{
@@ -52,11 +53,21 @@ const Header = () => {
             </div>
 
             <div className='flex items-center gap-4'>
-                <div className="text-3xl cursor-pointer">
-                {
-                    user?.profilePic ? (<img src={user?.profilePic} className='w-10 h-10 rounded-full' alt={user?.name} />) : (<FaRegCircleUser/>)
-                }
-                </div>
+
+                    <div className='relative flex justify-center'>
+                        <div className="text-3xl cursor-pointer relative flex justify-center" onClick={()=>setmenudisplay(preve => !preve)}>
+                            {
+                                user?.profilePic ? (<img src={user?.profilePic} className='w-10 h-10 rounded-full' alt={user?.name} />) : (<FaRegCircleUser/>)
+                            }
+                        </div>
+                                {
+                                    menudisplay && (<div className='absolute bg-white p-2 bottom-0 top-11 h-fit shadow-lg rounded '>
+                                        <nav>
+                                            <Link to = {"admin-panel"} className='whitespace-nowrap hover:bg-slate-100 p-2 hidden md:block' onClick={()=>setmenudisplay(preve => !preve)}>Admin Panel</Link>
+                                        </nav> 
+                                    </div>)
+                                }
+                    </div>
 
                 <div className="text-2xl relative">
                     <span><FaShoppingCart/></span>
