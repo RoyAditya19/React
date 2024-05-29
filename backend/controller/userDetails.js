@@ -9,7 +9,7 @@ async function userDetailsController(req,res)
                     data: user,
                     success: true,
                     error: false,
-                    message: "user  details"
+                    message: "user details saved"
                 })
                 
             } catch (error) {

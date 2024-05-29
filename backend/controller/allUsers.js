@@ -1,9 +1,16 @@
+const userModel = require("../models/userModel");
+
 const allUsers = async(req,res)=>
     {
         try {
-            console.log("userid", req.userId);
+
+            const allUsers = await userModel.find()
+
             res.json({
-                message:"all user"
+                message:"all user",
+                data: allUsers,
+                success:true,
+                error:false
             })
         } catch (error) {
             res.status(400).json({
