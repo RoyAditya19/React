@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import UploadProduct from '../components/UploadProduct'
 import SummaryApi from '../common'
+import AdminProductCard from '../components/AdminProductCard'
 
 const Allproducts = () => {
   const [openUploadProduct, setOpenUploadProduct] = useState(false)
@@ -30,14 +31,11 @@ const Allproducts = () => {
         </div>
 
       {/*all product display */}
-        <div className='flex items-center gap-5 py-4'>
+        <div className='flex flex-wrap items-center gap-5 py-4 h-[calc(100vh-190px)] overflow-y-scroll'> {/*here overflow-y-scroll was given so that only product display area gets scrolled down, not whole page */}
             {
               allProduct.map((product,index)=>{
                 return(
-                  <div className='bg-white p-4 rounded'>
-                    <img src={product?.productImage[0]} width={100} height={100} alt="" />
-                    <h1>{product.productName}</h1>
-                  </div>
+                  <AdminProductCard data={product} key={index+"allProduct"} fetchdata={fetchAllProduct}/>
                 )
               })
             }
@@ -45,7 +43,7 @@ const Allproducts = () => {
 
         {
           openUploadProduct && (
-        <UploadProduct onClose={()=>setOpenUploadProduct(false)} />
+        <UploadProduct onClose={()=>setOpenUploadProduct(false)} fetchData={fetchAllProduct}/>
 
           )
         }
