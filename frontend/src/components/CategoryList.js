@@ -25,7 +25,7 @@ const CategoryList = () => {
         },[])
   return (
     <div className='container mx-auto p-4'>
-            <div className='flex items-center gap-4 justify-between overflow-scroll scrollbar-none'>
+            <div className='flex items-center gap-4 justify-between overflow-scroll scrollbar-none'> {/*this overflow-scroll was responsible for the perfect scrolling of the items(tv,mobile etc) in mobile version */}
             {
                 loading? (
                     
@@ -41,7 +41,7 @@ const CategoryList = () => {
                         {
                             return(
                                 <Link to={"product-category/"+product?.category} className='cursor-pointer' key={product?.category}> {/*here "{"product-category/"+product?.category}" was used so that if user clicks on any specific section then that catefory name will also be displayed in the url */}
-                                    <div className=' h-16 w-16 md:w-20 md:h-20 flex rounded-full overflow-hidden p-4 bg-slate-200 flex items-center justify-center'>
+                                    <div className=' h-16 w-16 md:w-20 md:h-20 rounded-full overflow-hidden p-4 bg-slate-200 flex items-center justify-center'>
                                         <img src={product?.productImage[0]} alt={product?.category} className='h-full object-scale-down mix-blend-multiply hover:scale-125 transition-all' /> {/*this mix-blend thing removes the background color of any image if it has any */}
                                     </div>
                                     <p className='text-center text-sm md:text-base capitalize'>{product?.category}</p> 
