@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useContext, useState} from 'react'
 import Logo from './Logo'
 import { IoSearch } from "react-icons/io5";
 import { FaRegCircleUser } from "react-icons/fa6";
@@ -9,14 +9,15 @@ import SummaryApi from '../common';
 import { toast } from 'react-toastify';
 import { setUserDetails } from '../store/userSlice';
 import ROLE from '../common/role';
+import Context from '../context';
 
 const Header = () => {
     
     const user = useSelector(state=> state?.user?.user)                 //here all the details were fetched with the help of "state" defined in the userslice.js
     const dispatch = useDispatch()
     const [menudisplay, setmenudisplay] = useState(false)
+    const context = useContext(Context)
 
-    
     const handleLogout = async()=>{
         const fetchData = await fetch(SummaryApi.logout_user.url,{
             method: SummaryApi.logout_user.method,
@@ -80,12 +81,19 @@ const Header = () => {
                                 }
                     </div>
 
-                <div className="text-2xl relative">
-                    <span><FaShoppingCart/></span>
-                    <div className='bg-red-600 text-white w-3 h-3 p-2 flex items-center rounded-full justify-center absolute -top-1 -right-1'>
-                        <p className='text-xs'>0</p>
-                    </div>
-                </div>
+                    {
+                        user?._id && (
+
+                            <Link to={"/cart"} className="text-2xl relative">
+                                <span><FaShoppingCart/></span>
+
+                                <div className='bg-red-600 text-white w-3 h-3 p-2 flex items-center rounded-full justify-center absolute -top-1 -right-1'>
+                                    <p className='text-xs'>{context?.cartProductCount}</p>
+                                </div>
+
+
+                            </Link>
+                        )}
 
                 <div>
                 {

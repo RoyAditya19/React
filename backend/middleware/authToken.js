@@ -10,7 +10,7 @@ async function authToken(req, res, next) {
 
         if (!token) {
             return res.status(401).json({
-                message: "Unauthorized",
+                message: "Unauthorized! Please Login...!",
                 success: false,
                 error: true
             });

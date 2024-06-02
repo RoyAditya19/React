@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import SummaryApi from '../common'
 import { FaStar } from 'react-icons/fa6'
 import { FaStarHalf } from 'react-icons/fa6'
 import displayINRCurrency from '../helper/displayCurrency'
+import VerticalCardProduct from '../components/VerticalCardProduct'
+import CategoryWiseProductDisplay from '../components/CategoryWiseProductDisplay'
 
 const ProductDetails = () => {
   const[productdata,setProductData] = useState({
@@ -20,6 +22,13 @@ const ProductDetails = () => {
   const [loading,setLoading] = useState(false)
   const productImageListLoading = new Array(4).fill(null)
   const [activeimage,setActiveImage] = useState("")
+
+  const [zoomImageCoordinate,setZoomImageCoordinate] = useState({
+    x:0,
+    y:0
+  })
+
+  const [zoomImage,setZoomImage] = useState(false)
 
   const fetchProductDetails = async()=>
     { 
@@ -38,6 +47,7 @@ const ProductDetails = () => {
         setProductData(dataResponse?.data)
         setActiveImage(dataResponse?.productdata?.productImage[0])
     }
+
   useEffect(()=>
   {
     fetchProductDetails()
@@ -48,13 +58,47 @@ const ProductDetails = () => {
       setActiveImage(imageURL)
     }
 
+  const handleZoomImage = useCallback((e)=>{
+        setZoomImage(true)
+        const {left, top, width, height} = e.target.getBoundingClientRect()   //this was responsible for sending the coordinates of the image when the mouse was hovered over any specific area
+        const x = (e.clientX - left) / width
+        const y = (e.clientY - top) / height
+        
+        setZoomImageCoordinate({
+          x:x,
+          y:y
+        })
+    },[zoomImageCoordinate])
+
+
+    const handleLeaveImageZoom = ()=>
+      {
+        setZoomImage(false)
+      }
   return (
     <div className='container mx-auto p-4'>
           <div className='flex flex-col lg:flex-row gap-2 min-h-[200px]'>
           {/** product image */}
               <div className='h-96 flex flex-col gap-4 lg:flex-row-reverse'>
-              <div className='lg:h-96 lg:w-96 h-[300px] w-[300px] bg-slate-200'>
-                  <img src={activeimage} alt="" className='h-full w-full object-scale-down mix-blend-multiply'/>
+              <div className='lg:h-96 lg:w-96 h-[300px] w-[300px] bg-slate-200 relative p-2'>
+                  <img src={activeimage} alt="" className='h-full w-full object-scale-down mix-blend-multiply' onMouseMove={handleZoomImage} onMouseLeave={handleLeaveImageZoom} />
+                  {/**product zoom */}
+                  {
+                    zoomImage && (
+                      <div className='hidden lg:block absolute min-w-[500px] min-h-[400px] bg-slate-200 overflow-hidden p-1 -right-[510px] top-0'>
+                            <div 
+                            className='w-full h-full mix-blend-multiply min-h-[400px] min-w-[500px] scale-150' 
+                            style={{
+                              backgroundImage: `url(${activeimage})`,
+                              backgroundRepeat: 'no-repeat',
+                              backgroundPosition: `${zoomImageCoordinate.x * 100}%  ${zoomImageCoordinate.y * 100}% `
+                              }}>
+
+                            </div>
+                      </div>
+                    )
+                  }
+
               </div>
                     <div className='h-full'>
                             {
@@ -142,6 +186,12 @@ const ProductDetails = () => {
                   }
 
           </div>
+
+          {
+            productdata?.category && (
+            <CategoryWiseProductDisplay category={productdata?.category} heading={"Recommended Product"}/>
+            )
+          }
     </div>
   )
 }
