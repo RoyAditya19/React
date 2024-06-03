@@ -1,18 +1,13 @@
-import React, { useState,useEffect, useRef, useContext } from 'react'
-import fetchCategoryWiseProduct from '../helper/fetchCategoryWiseProduct'
+import React, { useContext } from 'react'
+import scrollTop from '../helper/scrollTop'
 import displayINRCurrency from '../helper/displayCurrency'
-import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6'
-import { Link } from 'react-router-dom'
 import addToCart from '../helper/addToCart'
 import Context from '../context'
-import scrollTop from '../helper/scrollTop'
+import { Link } from 'react-router-dom'
 
-const CategoryWiseProductDisplay = ({category,heading}) => {
-    const [data,setData] = useState([])
-    const [loading,setLoading] = useState(true)
+const VerticalCard = ({loading,data = []}) => {
     const loadingList = new Array(13).fill(null)
-    
-  const {fetchUserAddToCart} = useContext(Context)
+    const {fetchUserAddToCart} = useContext(Context)
 
   const handleAddToCart = async(e,id)=>
     {
@@ -20,25 +15,8 @@ const CategoryWiseProductDisplay = ({category,heading}) => {
         fetchUserAddToCart()
     }
     
-
-    const fetchData = async()=>{
-        setLoading(true)
-        const categoryProduct = await fetchCategoryWiseProduct(category)
-        setLoading(false)
-        setData(categoryProduct?.data)
-    }
-
-    useEffect(()=>
-    {
-        fetchData()
-    },[])
-
-    
   return (
-    <div className='container mx-auto px-4 my-6 relative'>  {/*here position was made as relative so that the buttons below can come outside this container */}
-        <h2 className='text-2xl py-4 font-semibold'>{heading}</h2>
-
-        <div className=' grid grid-cols-[repeat(auto-fit,minmax(300px,320px))] justify-between md:gap-6 overflow-x-scroll scrollbar-none transition-all'>
+    <div className=' grid grid-cols-[repeat(auto-fit,minmax(300px,320px))] justify-between md:gap-6 overflow-x-scroll scrollbar-none transition-all'>
         
         
         {
@@ -86,9 +64,7 @@ const CategoryWiseProductDisplay = ({category,heading}) => {
             
         }
         </div>
-
-    </div>
   )
 }
 
-export default CategoryWiseProductDisplay
+export default VerticalCard

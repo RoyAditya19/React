@@ -69,6 +69,21 @@ const SummaryApi =
     {
         url: `${backendDomain}/api/viewcartproduct`,
         method: "get"
+    },
+    updateCartProduct:
+    {
+        url: `${backendDomain}/api/updatecartproduct`,
+        method: "post"
+    },
+    deleteCartProduct:
+    {
+        url: `${backendDomain}/api/deletecartproduct`,
+        method: "post"
+    },
+    searchProduct:
+    {
+        url: `${backendDomain}/api/search`,
+        method: "get"
     }
 }
 
