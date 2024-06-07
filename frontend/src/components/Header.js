@@ -3,7 +3,7 @@ import Logo from './Logo'
 import { IoSearch } from "react-icons/io5";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import SummaryApi from '../common';
 import { toast } from 'react-toastify';
@@ -18,6 +18,10 @@ const Header = () => {
     const [menudisplay, setmenudisplay] = useState(false)
     const context = useContext(Context)
     const navigate = useNavigate()
+    const searchInput = useLocation()
+    const URLSearch = new URLSearchParams(searchInput?.search)
+    const searchQuery = URLSearch.getAll("q")
+    const [search,setSearch] = useState(searchQuery)
 
     const handleLogout = async()=>{
         const fetchData = await fetch(SummaryApi.logout_user.url,{
@@ -31,6 +35,7 @@ const Header = () => {
             {
                 toast.success(data.message)
                 dispatch(setUserDetails(null))                      //this is setting the userdetails to none, as when logout button was clicked cookies was getting cleared but after the page reload
+                navigate("/")
             }
 
         if(data.error)
@@ -41,7 +46,7 @@ const Header = () => {
 
     const handleSearch = (e)=>{
         const {value} = e.target
-
+        setSearch(value)
         if(value)
             {
                 navigate(`/search?q=${value}`)
@@ -62,7 +67,7 @@ const Header = () => {
 
 
             <div className="hidden lg:flex items-center w-full justify-center max-w-sm border rounded-full pl-2 focus-within:shadow-md">
-                <input type="text" placeholder='search products here' className='outline-none w-full h-8 flex items-center' onChange={handleSearch}/>
+                <input type="text" placeholder='search products here' className='outline-none w-full h-8 flex items-center' onChange={handleSearch} value={search}/>
                 <div>
                 <IoSearch className='text-lg bg-red-600 h-8 min-w-16 flex items-center justify-center rounded-r-full'/>
                 </div>

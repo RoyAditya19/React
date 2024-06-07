@@ -1,11 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import SummaryApi from '../common'
 import { FaStar } from 'react-icons/fa6'
 import { FaStarHalf } from 'react-icons/fa6'
 import displayINRCurrency from '../helper/displayCurrency'
 import VerticalCardProduct from '../components/VerticalCardProduct'
 import CategoryWiseProductDisplay from '../components/CategoryWiseProductDisplay'
+import addToCart from '../helper/addToCart'
+import Context from '../context'
 
 const ProductDetails = () => {
   const[productdata,setProductData] = useState({
@@ -22,6 +24,9 @@ const ProductDetails = () => {
   const [loading,setLoading] = useState(false)
   const productImageListLoading = new Array(4).fill(null)
   const [activeimage,setActiveImage] = useState("")
+
+  const {fetchUserAddToCart} = useContext(Context)
+  const navigate = useNavigate()
 
   const [zoomImageCoordinate,setZoomImageCoordinate] = useState({
     x:0,
@@ -75,6 +80,17 @@ const ProductDetails = () => {
       {
         setZoomImage(false)
       }
+
+    const handleAddToCart = async(e,id)=>{
+        await addToCart(e,id)
+        fetchUserAddToCart()
+    }
+
+    const handleBuyProduct = async(e,id)=>{
+        await addToCart(e,id)
+        fetchUserAddToCart()
+        navigate("/cart")
+    }
   return (
     <div className='container mx-auto p-4'>
           <div className='flex flex-col lg:flex-row gap-2 min-h-[200px]'>
@@ -105,10 +121,10 @@ const ProductDetails = () => {
                               loading ? (
                                     <div className='flex gap-2 lg:flex-col overflow-scroll scrollbar-none h-full'>
                               {
-                                  productImageListLoading.map(el=>
+                                  productImageListLoading.map((el,index)=>
                                 {
                                   return(
-                                    <div className='h-20 w-20 bg-slate-200 rounded animate-pulse' key={"loadingImage"}>
+                                    <div className='h-20 w-20 bg-slate-200 rounded animate-pulse' key={"loadingImage"+index}>
 
                                     </div>
                                   )
@@ -174,8 +190,8 @@ const ProductDetails = () => {
                     </div>
 
                     <div className='flex items-center gap-3 my-2'>
-                          <button className='border-2 border-red-600 rounded px-3 py-1 min-w-[120px] font-medium text-red-600 hover:bg-red-600 hover:text-white'>Buy</button>
-                          <button className='border-2 border-red-600 rounded px-3 py-1 min-w-[120px]  bg-red-600 hover:bg-white hover:text-red-600 font-medium text-white'>Add To Cart</button>
+                          <button className='border-2 border-red-600 rounded px-3 py-1 min-w-[120px] font-medium text-red-600 hover:bg-red-600 hover:text-white' onClick={(e)=>handleBuyProduct(e,productdata?._id)}>Buy</button>
+                          <button className='border-2 border-red-600 rounded px-3 py-1 min-w-[120px]  bg-red-600 hover:bg-white hover:text-red-600 font-medium text-white' onClick={(e)=>handleAddToCart(e,productdata?._id)}>Add To Cart</button>
                     </div>
                     <div>
                       <p className='text-slate-600 font-medium my-1'>Description:</p>

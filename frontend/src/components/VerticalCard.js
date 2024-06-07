@@ -16,7 +16,7 @@ const VerticalCard = ({loading,data = []}) => {
     }
     
   return (
-    <div className=' grid grid-cols-[repeat(auto-fit,minmax(300px,320px))] justify-between md:gap-6 overflow-x-scroll scrollbar-none transition-all'>
+    <div className=' grid grid-cols-[repeat(auto-fit,minmax(260px,300px))] justify-center md:justify-between md:gap-4 overflow-x-scroll scrollbar-none transition-all'>
         
         
         {
@@ -44,7 +44,7 @@ const VerticalCard = ({loading,data = []}) => {
             ): (
                 data.map((product,index)=>{
                 return(
-            <Link to={"/product/"+product?._id} className='w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] bg-white rounded-sm shadow' onClick={scrollTop}>    {/*when we were clicking on a specific product this function was called bcz when we were clicking on any recommended products then that product was not getting displayed and also the useEffect(of ProductDetails) was updated by passing the params in dependencies so that whenever a params get updated the new details with their id gets displayed*/}
+            <Link to={"/product/"+product?._id} className='w-full min-w-[280px] md:min-w-[300px] max-w-[280px] md:max-w-[300px] bg-white rounded-sm shadow' onClick={scrollTop}>    {/*when we were clicking on a specific product this function was called bcz when we were clicking on any recommended products then that product was not getting displayed and also the useEffect(of ProductDetails) was updated by passing the params in dependencies so that whenever a params get updated the new details with their id gets displayed*/}
                 <div className='bg-slate-200 h-48 flex justify-center items-center p-4 min-w-[280px] md:min-w-[145px] '>
                     <img src={product.productImage[0]} alt="" className='object-scale-down h-full hover:scale-110 transition-all mix-blend-multiply'/> {/*"mix-blend-multiply" was used to remove the white background of the image */}
                 </div>

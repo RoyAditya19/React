@@ -14,7 +14,6 @@ const Cart = () => {
 
     const fetchData = async()=>
         {
-            setLoading(true)
             const response = await fetch(SummaryApi.addToCartProductView.url,{
                 method: SummaryApi.addToCartProductView.method,
                 credentials: 'include',
@@ -22,7 +21,6 @@ const Cart = () => {
                     "content-type": "application/json"
                 },
             })
-            setLoading(false)
             const responseData = await response.json()
             if(responseData.success)
                 {
@@ -30,9 +28,16 @@ const Cart = () => {
                 }
         }
         
+        const handleLoading = async()=>
+            {
+            await fetchData()
+
+            }
         
         useEffect(()=>{
-            fetchData()
+            setLoading(true)
+            handleLoading()
+            setLoading(false)
         },[])
 
 
@@ -119,10 +124,11 @@ const Cart = () => {
             <div className='w-full max-w-3xl'>
                     {
                         loading ? (
-                                loadingCart.map(el=>
+                                loadingCart.map((el,index)=>
                                 {
                                     return(
-                                        <div key={el+"Add To Cart Loading"} className='w-full bg-slate-200 h-32 my-1 border border-slate-300 animate-pulse rounded'>
+                                        //in the below line, index was passed because when the add item button(+) was getting clicked then the page was showing the empty box of same size of the container which was used to display the product along with its detail(qty,description etc) 
+                                        <div key={el+"Add To Cart Loading"+index} className='w-full bg-slate-200 h-32 my-1 border border-slate-300 animate-pulse rounded'>
 
                                         </div>
                                     )
